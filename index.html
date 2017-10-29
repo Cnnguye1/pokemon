@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
+    <title>What is that Pokemon</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        
+        var imgString = "";
+        for(var i =1; i <= 500; i++){
+            imgString += '<img id="' + i + '" src="http://pokeapi.co/media/img/' + i + '.png">'
+        }
+        $(document).ready(function(){
+            
+            $("#container").append(imgString);
+            
+        })
+        $(document).on('click', 'img', function(){
+            
+            var id = $(this).attr('id');
+            $.get("https://pokeapi.co/api/v2/pokemon/" + id, function(pokemon){
+                var name = pokemon.name;
+                var poke_types = "";
+                // var img = $(this).attr('src');
+                var img = '<img src="http://pokeapi.co/media/img/' + id + '.png">'
+                var height = pokemon.height;
+                console.log(height);
+                var weight = pokemon.weight;
+                console.log(weight)
+                // console.log(pokemon.types[0].name)
+                for(var i = 0; i <pokemon.types.length; i++){
+                    poke_types += '<li>' + pokemon.types[i].type.name + '</li>'
+
+                }
+                var htmlString = '<h1>' + name + '</h1>' + img + '<br><h3>Types:</h3><ul>' + poke_types + '</ul>' +
+                '<h3>Height:</h3><br>' + height + '<br><h3>Weight:</h3><br>' + weight;
+                $('#poke_infor').html(htmlString)
+                console.log(poke_types)
+                console.log(pokemon.types)
+
+           
+                console.log(pokemon);
+            }, "json");
+
+           
+            
+                
+                // $('#poke_infor').html('<img src=' + $(this).attr("src") + '"</img> <br> '       )
+                // // console.log(id);
+                // })
+             
+            
+        })
+    
+    </script>
+</head>
+<body>
+    <div id="container">
+
+    </div>
+    <div id="poke_infor">
+        <h1></h1>
+        <img src="" alt="">
+        <h3></h3>
+        <ul>
+            <li></li>
+        </ul>
+
+
+    </div>
+    
+</body>
+</html>
